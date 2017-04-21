@@ -1,65 +1,65 @@
 jobs:
 
-  ###################################
-  # runCI job to update the image tag
-  ###################################
-  - name: deploy-ecs-multi-container_runCI
-    type: runCI
-    flags:
-      - deploy-ecs-multi-container
-    steps:
-      - OUT: deploy-ecs-multi-container-image
-
-  ######################################
-  # Two images, one manifest, one deploy
-  ######################################
-
-  - name: deploy-ecs-multi-container-manifest-1
-    type: manifest
-    flags:
-      - deploy-ecs-multi-container
-    steps:
-     - IN: deploy-ecs-multi-container-image
-     - IN: deploy-ecs-multi-container-nginx
-
-  - name: deploy-ecs-multi-container-deploy-1
-    type: deploy
-    flags:
-      - deploy-ecs-multi-container
-    steps:
-      - IN: deploy-ecs-multi-container-manifest-1
-      - IN: deploy-ecs-multi-container-ecs-cluster
-
-
-  ########################################
-  # Two images, two manifests, one deploy
-  ########################################
-
-  - name: deploy-ecs-multi-container-manifest-2a
-    type: manifest
-    flags:
-      - deploy-ecs-multi-container
-    steps:
-     - IN: deploy-ecs-multi-container-image
-
-  - name: deploy-ecs-multi-container-manifest-2b
-    type: manifest
-    flags:
-      - deploy-ecs-multi-container
-    steps:
-      - IN: deploy-ecs-multi-container-nginx
-
-  - name: deploy-ecs-multi-container-deploy
-    type: deploy
-    flags:
-      - deploy-ecs-multi-container
-    steps:
-      - IN: deploy-ecs-multi-container-manifest-2a
-      - IN: deploy-ecs-multi-container-manifest-2b
-      - IN: deploy-ecs-multi-container-ecs-cluster
-      - TASK: managed
-        deployOptions:
-          - parallel
+  # ###################################
+  # # runCI job to update the image tag
+  # ###################################
+  # - name: deploy-ecs-multi-container_runCI
+  #   type: runCI
+  #   flags:
+  #     - deploy-ecs-multi-container
+  #   steps:
+  #     - OUT: deploy-ecs-multi-container-image
+  #
+  # ######################################
+  # # Two images, one manifest, one deploy
+  # ######################################
+  #
+  # - name: deploy-ecs-multi-container-manifest-1
+  #   type: manifest
+  #   flags:
+  #     - deploy-ecs-multi-container
+  #   steps:
+  #    - IN: deploy-ecs-multi-container-image
+  #    - IN: deploy-ecs-multi-container-nginx
+  #
+  # - name: deploy-ecs-multi-container-deploy-1
+  #   type: deploy
+  #   flags:
+  #     - deploy-ecs-multi-container
+  #   steps:
+  #     - IN: deploy-ecs-multi-container-manifest-1
+  #     - IN: deploy-ecs-multi-container-ecs-cluster
+  #
+  #
+  # ########################################
+  # # Two images, two manifests, one deploy
+  # ########################################
+  #
+  # - name: deploy-ecs-multi-container-manifest-2a
+  #   type: manifest
+  #   flags:
+  #     - deploy-ecs-multi-container
+  #   steps:
+  #    - IN: deploy-ecs-multi-container-image
+  #
+  # - name: deploy-ecs-multi-container-manifest-2b
+  #   type: manifest
+  #   flags:
+  #     - deploy-ecs-multi-container
+  #   steps:
+  #     - IN: deploy-ecs-multi-container-nginx
+  #
+  # - name: deploy-ecs-multi-container-deploy
+  #   type: deploy
+  #   flags:
+  #     - deploy-ecs-multi-container
+  #   steps:
+  #     - IN: deploy-ecs-multi-container-manifest-2a
+  #     - IN: deploy-ecs-multi-container-manifest-2b
+  #     - IN: deploy-ecs-multi-container-ecs-cluster
+  #     - TASK: managed
+  #       deployOptions:
+  #         - parallel
 
   ########################################
   # Two images, two manifests, two deploys
