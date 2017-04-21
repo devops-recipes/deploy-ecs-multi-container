@@ -10,27 +10,27 @@ jobs:
   #   steps:
   #     - OUT: deploy-ecs-multi-container-image
   #
-  # ######################################
-  # # Two images, one manifest, one deploy
-  # ######################################
-  #
-  # - name: deploy-ecs-multi-container-manifest-1
-  #   type: manifest
-  #   flags:
-  #     - deploy-ecs-multi-container
-  #   steps:
-  #    - IN: deploy-ecs-multi-container-image
-  #    - IN: deploy-ecs-multi-container-nginx
-  #
-  # - name: deploy-ecs-multi-container-deploy-1
-  #   type: deploy
-  #   flags:
-  #     - deploy-ecs-multi-container
-  #   steps:
-  #     - IN: deploy-ecs-multi-container-manifest-1
-  #     - IN: deploy-ecs-multi-container-ecs-cluster
-  #
-  #
+  ######################################
+  # Two images, one manifest, one deploy
+  ######################################
+
+  - name: deploy-ecs-multi-container-manifest-1
+    type: manifest
+    flags:
+      - deploy-ecs-multi-container
+    steps:
+     - IN: deploy-ecs-multi-container-image
+     - IN: deploy-ecs-multi-container-nginx
+
+  - name: deploy-ecs-multi-container-deploy-1
+    type: deploy
+    flags:
+      - deploy-ecs-multi-container
+    steps:
+      - IN: deploy-ecs-multi-container-manifest-1
+      - IN: deploy-ecs-multi-container-ecs-cluster
+
+
   # ########################################
   # # Two images, two manifests, one deploy
   # ########################################
@@ -61,36 +61,36 @@ jobs:
   #       deployOptions:
   #         - parallel
 
-  ########################################
-  # Two images, two manifests, two deploys
-  ########################################
-
-  - name: deploy-ecs-multi-container-manifest-3a
-    type: manifest
-    flags:
-      - deploy-ecs-multi-container
-    steps:
-     - IN: deploy-ecs-multi-container-image
-
-  - name: deploy-ecs-multi-container-manifest-3b
-    type: manifest
-    flags:
-      - deploy-ecs-multi-container
-    steps:
-      - IN: deploy-ecs-multi-container-nginx
-
-  - name: deploy-ecs-multi-container-deploy-3a
-    type: deploy
-    flags:
-      - deploy-ecs-multi-container
-    steps:
-      - IN: deploy-ecs-multi-container-manifest-3a
-      - IN: deploy-ecs-multi-container-ecs-cluster
-
-  - name: deploy-ecs-multi-container-deploy-3b
-    type: deploy
-    flags:
-      - deploy-ecs-multi-container
-    steps:
-      - IN: deploy-ecs-multi-container-manifest-3b
-      - IN: deploy-ecs-multi-container-ecs-cluster
+  # ########################################
+  # # Two images, two manifests, two deploys
+  # ########################################
+  #
+  # - name: deploy-ecs-multi-container-manifest-3a
+  #   type: manifest
+  #   flags:
+  #     - deploy-ecs-multi-container
+  #   steps:
+  #    - IN: deploy-ecs-multi-container-image
+  #
+  # - name: deploy-ecs-multi-container-manifest-3b
+  #   type: manifest
+  #   flags:
+  #     - deploy-ecs-multi-container
+  #   steps:
+  #     - IN: deploy-ecs-multi-container-nginx
+  #
+  # - name: deploy-ecs-multi-container-deploy-3a
+  #   type: deploy
+  #   flags:
+  #     - deploy-ecs-multi-container
+  #   steps:
+  #     - IN: deploy-ecs-multi-container-manifest-3a
+  #     - IN: deploy-ecs-multi-container-ecs-cluster
+  #
+  # - name: deploy-ecs-multi-container-deploy-3b
+  #   type: deploy
+  #   flags:
+  #     - deploy-ecs-multi-container
+  #   steps:
+  #     - IN: deploy-ecs-multi-container-manifest-3b
+  #     - IN: deploy-ecs-multi-container-ecs-cluster
