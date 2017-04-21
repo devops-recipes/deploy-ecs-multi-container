@@ -1,0 +1,47 @@
+# Language setting http://docs.shippable.com/ci/languages/node/
+language: node_js
+
+# use this to control what branches get built.
+# http://docs.shippable.com/ci/advancedOptions/branches/
+branches:
+  only:
+    - master
+
+# using pre-defined build variables
+# full list http://docs.shippable.com/ci/advancedOptions/environmentVariables/
+env:
+  global:
+    - TEST_RESULTS_DIR=$SHIPPABLE_REPO_DIR/shippable/testresults
+    - CODE_COVERAGE_DIR=$SHIPPABLE_REPO_DIR/shippable/codecoverage
+    - TESTS_LOC_DIR=$SHIPPABLE_REPO_DIR/tests
+    - MOD_LOC=$SHIPPABLE_REPO_DIR/node_modules/.bin/
+    - ECR_REPO=679404489841.dkr.ecr.us-east-1.amazonaws.com/deploy-ecs-multi-container
+
+build:
+
+  # http://docs.shippable.com/ci/shippableyml/#ci
+  ci:
+    # npm mirrors can sometimes be flacky, better to use shippable_retry
+    # http://docs.shippable.com/ci/advancedOptions/retry/
+    - shippable_retry npm install
+    - mkdir -p $TEST_RESULTS_DIR && mkdir -p $CODE_COVERAGE_DIR
+    - pushd $TESTS_LOC_DIR
+    - $MOD_LOC/mocha --recursive "$TESTS_LOC_DIR/**/*.spec.js" -R mocha-junit-reporter --reporter-options mochaFile=$TEST_RESULTS_DIR/testresults.xml
+    - $MOD_LOC/istanbul --include-all-sources cover -root "$SHIPPABLE_REPO_DIR/routes" $SHIPPABLE_REPO_DIR/node_modules/mocha/bin/_mocha -- -R spec-xunit-file --recursive "$TESTS_LOC_DIR/**/*.spec.js"
+    - $MOD_LOC/istanbul report cobertura --dir $CODE_COVERAGE_DIR
+    - popd
+
+  # http://docs.shippable.com/ci/shippableyml/#post_ci
+  post_ci:
+    - 'if [ $IS_PULL_REQUEST == "false" ] ; then docker build -t $ECR_REPO:$BRANCH.$BUILD_NUMBER .; fi'
+    - 'if [ $IS_PULL_REQUEST == "false" ] ; then docker push $ECR_REPO:$BRANCH.$BUILD_NUMBER ; fi'
+    - 'if [ $IS_PULL_REQUEST == "false" ] ; then echo "versionName=$BRANCH.$BUILD_NUMBER" > $JOB_STATE/deploy-ecs-multi-container-image.env ; fi'
+
+# Integrations are used to connect external resources to CI
+# http://docs.shippable.com/integrations/overview/
+integrations:
+  # adding docker hub integration so that credentials are available to CI Job
+  # http://docs.shippable.com/integrations/imageRegistries/ecr/
+  hub:
+    - integrationName: dr-ecr
+      type: ecr
