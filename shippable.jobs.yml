@@ -57,9 +57,9 @@ jobs:
       - IN: deploy-ecs-multi-container-manifest-2a
       - IN: deploy-ecs-multi-container-manifest-2b
       - IN: deploy-ecs-multi-container-ecs-cluster
-      - TASK: managed
-        deployOptions:
-          - parallel
+      # - TASK: managed
+      #   deployOptions:
+      #     - parallel
 
   ########################################
   # Two images, two manifests, two deploys
