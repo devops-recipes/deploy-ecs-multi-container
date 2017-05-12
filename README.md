@@ -5,8 +5,8 @@
 ![AyeAye](https://github.com/devops-recipes/push-docker-hub/blob/master/public/resources/images/captain.png)
 
 A simple Node JS application with unit tests and coverage reports using mocha
-and istanbul. It also does a docker build once CI posses and then pushes the image
-to docker hub
+and istanbul. It also does a docker build once CI passes and then pushes the image
+to Amazon ECR.
 
 ## Run CI for this repo on Shippable
 * Fork this repo into your local repo
@@ -14,8 +14,8 @@ to docker hub
 * Create an [integration](http://docs.shippable.com/integrations/imageRegistries/dockerHub/) on shippable to your docker hub
 * All CI configuration is in `shippable.yml`
 * Follow these [CI Setup Instructions](http://docs.shippable.com/ci/runFirstBuild/) if you have never used Shippable CI Service
-* Update the integrationName in the integration.hub section if you used something other than `shipDH`
-* Change the DOCKER_REPO and DOCKER_ACC to point to your repo and docker account
+* Update the integrationName in the integration.hub section if you used something other than `dr-ecr`
+* Change the ECR_REPO to point to your repo and aws account
 * You should be able to run a manual build or webhook build on commit
 
 ## CI Reports on Shippable
