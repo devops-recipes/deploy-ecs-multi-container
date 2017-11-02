@@ -40,8 +40,8 @@ build:
 # Integrations are used to connect external resources to CI
 # http://docs.shippable.com/integrations/overview/
 integrations:
-  # adding docker hub integration so that credentials are available to CI Job
-  # http://docs.shippable.com/integrations/imageRegistries/ecr/
+  # adding awsKeys integration so that credentials are available to CI Job
+  # http://docs.shippable.com/platform/integration/aws-keys/
   hub:
-    - integrationName: dr-ecr
-      type: ecr
+    - integrationName: dr-awskeys
+      type: amazonKeys
