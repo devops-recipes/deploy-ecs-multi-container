@@ -51,15 +51,13 @@ jobs:
 
   - name: deploy-ecs-multi-container-deploy
     type: deploy
+    workflow: parallel
     flags:
       - deploy-ecs-multi-container
     steps:
       - IN: deploy-ecs-multi-container-manifest-2a
       - IN: deploy-ecs-multi-container-manifest-2b
       - IN: deploy-ecs-multi-container-ecs-cluster
-      - TASK: managed
-        deployOptions:
-          - parallel
 
   ########################################
   # Two images, two manifests, two deploys
