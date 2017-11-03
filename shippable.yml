@@ -43,5 +43,5 @@ integrations:
   # adding awsKeys integration so that credentials are available to CI Job
   # http://docs.shippable.com/platform/integration/aws-keys/
   hub:
-    - integrationName: dr-awskeys
+    - integrationName: dr-aws-keys
       type: amazonKeys

@@ -14,7 +14,7 @@ to Amazon ECR.
 * Create an [integration](http://docs.shippable.com/platform/integration/aws-keys/) on shippable to your Amazon ECR
 * All CI configuration is in `shippable.yml`
 * Follow these [CI Setup Instructions](http://docs.shippable.com/ci/runFirstBuild/) if you have never used Shippable CI Service
-* Update the integrationName in the integration.hub section if you used something other than `dr-awskeys``
+* Update the integrationName in the integration.hub section if you used something other than `dr-aws-keys`
 * Change the ECR_REPO to point to your repo and aws account
 * You should be able to run a manual build or webhook build on commit
 
